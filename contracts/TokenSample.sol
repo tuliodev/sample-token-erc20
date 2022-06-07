@@ -8,6 +8,7 @@ interface IERC20 {
     function totalSupply() external returns(uint256);
     function balanceOf(address _owner) external returns(uint256);
     function transfer(address _to, uint256 _value) external returns(bool);
+    function transferFrom(address _from, address _to, uint256 _value) external returns(bool);
 }
 
 contract TokenSample is IERC20 {
@@ -18,6 +19,7 @@ contract TokenSample is IERC20 {
     uint256 totalSupply_;
 
     mapping(address => uint256) balances;
+    mapping(address => mapping(address => uint256)) allowed;
 
     event Approval(
         address indexed tokenOwner,
@@ -54,4 +56,27 @@ contract TokenSample is IERC20 {
 
         return true;
     }
+
+    function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
+        require(
+            _value <= balances[_from],
+            "Owner must have the tokens value on account"
+        );
+
+        require(
+            _value <= allowed[_from][_to],
+            "Must be allowed to make this transaction"
+        );
+
+        balances[_from] = balances[_from] - _value;
+        balances[_to] = balances[_to] + _value;
+
+        allowed[_from][_to] = allowed[_from][_to] - _value;
+
+        emit Transfer(_from, _to, _value);
+
+        return true;
+    }
+
+
 }
