@@ -10,6 +10,7 @@ interface IERC20 {
     function transfer(address _to, uint256 _value) external returns(bool);
     function transferFrom(address _from, address _to, uint256 _value) external returns(bool);
     function approve(address _spender, uint256 _value) external returns(bool);
+    function allowance(address _owner, address _spender) external returns(uint256);
 }
 
 contract TokenSample is IERC20 {
@@ -83,6 +84,10 @@ contract TokenSample is IERC20 {
         allowed[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
+    }
+    
+    function allowance(address _owner, address _spender) public view override returns (uint256) {
+        return allowed[_owner][_spender];
     }
 
 
