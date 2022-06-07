@@ -35,14 +35,17 @@ contract TokenSample {
         return balances[_owner];
     }
 
-    function transfer(address _to, uint _value) public returns (bool) {
-        require(_value <= balances[msg.sender] , 'You must have this tokens on you account');
+    function transfer(address _to, uint256 _value) public returns (bool) {
+        require(
+            _value <= balances[msg.sender],
+            "You must have this tokens on you account"
+        );
 
         balances[msg.sender] = balances[msg.sender] - _value;
         balances[_to] += _value;
 
         emit Transfer(msg.sender, _to, _value);
 
-        return true;   
+        return true;
     }
 }
