@@ -12,7 +12,6 @@ contract TokenSample {
     uint256 totalSupply_;
 
     mapping(address => uint256) balances;
-    mapping(address => mapping (address => uint256)) allowed;
 
     event Approval(
         address indexed tokenOwner,
@@ -34,5 +33,16 @@ contract TokenSample {
 
     function balanceOf(address tokenOwner) public view returns (uint256) {
         return balances[tokenOwner];
+    }
+
+    function transfer(address to, uint tokens) public returns (bool) {
+        require(tokens <= balances[msg.sender] , 'You must have this tokens on you account');
+
+        balances[msg.sender] = balances[msg.sender] - tokens;
+        balances[to] += tokens;
+
+        emit Transfer(msg.sender, to, tokens);
+
+        return true;   
     }
 }

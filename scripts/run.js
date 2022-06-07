@@ -11,19 +11,32 @@ const main = async () => {
   );
   await tokenSampleContract.deployed();
 
+  const getUserBalanceOf = async (user) => {
+    let balanceOf = await tokenSampleContract
+      .connect(user)
+      .balanceOf(user.address);
+
+    return balanceOf;
+  };
+
   console.log("Contract address:", tokenSampleContract.address);
 
   // Get total supply
 
   let totalSupply = await tokenSampleContract.totalSupply();
-  console.log("Total supply: ", totalSupply);
+  
+  // transfer to random user
 
-  // get balance of a user
+  await tokenSampleContract.connect(owner).transfer(randomPerson.address, 20);
 
-  let balanceOf = await tokenSampleContract
-    .connect(randomPerson)
-    .balanceOf(randomPerson.address);
-  console.log("Balance of: ", balanceOf);
+  let balanceOf = await getUserBalanceOf(randomPerson);
+
+  console.log("Random person balanceof => ", balanceOf)
+
+  balanceOf = await getUserBalanceOf(owner);
+
+  console.log("Owner balanceof => ", balanceOf)
+
 };
 
 const runMain = async () => {
