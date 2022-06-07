@@ -9,6 +9,7 @@ interface IERC20 {
     function balanceOf(address _owner) external returns(uint256);
     function transfer(address _to, uint256 _value) external returns(bool);
     function transferFrom(address _from, address _to, uint256 _value) external returns(bool);
+    function approve(address _spender, uint256 _value) external returns(bool);
 }
 
 contract TokenSample is IERC20 {
@@ -75,6 +76,12 @@ contract TokenSample is IERC20 {
 
         emit Transfer(_from, _to, _value);
 
+        return true;
+    }
+
+    function approve(address _spender, uint256 _value) public override returns (bool) {
+        allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
