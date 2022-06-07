@@ -4,7 +4,13 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-contract TokenSample {
+interface IERC20 {
+    function totalSupply() external returns(uint256);
+    function balanceOf(address _owner) external returns(uint256);
+    function transfer(address _to, uint256 _value) external returns(bool);
+}
+
+contract TokenSample is IERC20 {
     string public constant name = "Token sample coin";
     string public constant symbol = "TSC";
     uint8 public constant decimals = 18;
@@ -27,15 +33,15 @@ contract TokenSample {
         console.log("Deployed, total token supply: ", total);
     }
 
-    function totalSupply() public view returns (uint256) {
+    function totalSupply() public view override returns (uint256) {
         return totalSupply_;
     }
 
-    function balanceOf(address _owner) public view returns (uint256) {
+    function balanceOf(address _owner) public view override returns (uint256) {
         return balances[_owner];
     }
 
-    function transfer(address _to, uint256 _value) public returns (bool) {
+    function transfer(address _to, uint256 _value) public override returns (bool) {
         require(
             _value <= balances[msg.sender],
             "You must have this tokens on you account"
