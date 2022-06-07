@@ -12,6 +12,14 @@ contract TokenSample {
     uint256 totalSupply_;
 
     mapping(address => uint256) balances;
+    mapping(address => mapping (address => uint256)) allowed;
+
+    event Approval(
+        address indexed tokenOwner,
+        address indexed spender,
+        uint256 tokens
+    );
+    event Transfer(address indexed from, address indexed to, uint256 tokens);
 
     constructor(uint256 total) {
         totalSupply_ = total;
