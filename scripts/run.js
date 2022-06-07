@@ -3,7 +3,7 @@ const main = async () => {
     "TokenSample"
   );
 
-  const tokenSampleContract = await tokenSampleContractFactory.deploy();
+  const tokenSampleContract = await tokenSampleContractFactory.deploy(200 /** Token supply */);
   await tokenSampleContract.deployed();
 
   console.log("Contract address:", tokenSampleContract.address);
