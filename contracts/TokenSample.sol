@@ -31,17 +31,17 @@ contract TokenSample {
         return totalSupply_;
     }
 
-    function balanceOf(address tokenOwner) public view returns (uint256) {
-        return balances[tokenOwner];
+    function balanceOf(address _owner) public view returns (uint256) {
+        return balances[_owner];
     }
 
-    function transfer(address to, uint tokens) public returns (bool) {
-        require(tokens <= balances[msg.sender] , 'You must have this tokens on you account');
+    function transfer(address _to, uint _value) public returns (bool) {
+        require(_value <= balances[msg.sender] , 'You must have this tokens on you account');
 
-        balances[msg.sender] = balances[msg.sender] - tokens;
-        balances[to] += tokens;
+        balances[msg.sender] = balances[msg.sender] - _value;
+        balances[_to] += _value;
 
-        emit Transfer(msg.sender, to, tokens);
+        emit Transfer(msg.sender, _to, _value);
 
         return true;   
     }
