@@ -1,15 +1,26 @@
-# Basic Sample Hardhat Project
+# ERC-20 Token sample
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Project made to study the ERC-20 token pattern with solidity
 
-Try running some of the following tasks:
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+
+# Tools :hammer_and_wrench:
+- Hardhat 
+- Solidity
+- Npm
+- Javascript
+
+# Features :rocket:
+
+- Get all token supply
+- Get a token balance of a user by your address
+- Transfer token between users
+
+
+# Author :bust_in_silhouette:
+
+<table>
+<tr>
+<td align="center"><a href="https://github.com/tulioDev"><img src="https://github.com/tulioDev.png?size=100" alt="Tulio" align="center"/><br/><sub><b>Tulio</b></sub></a></td>
+</tr>
+</table>
