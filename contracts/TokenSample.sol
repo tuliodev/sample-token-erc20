@@ -22,6 +22,8 @@ interface IERC20 {
     function allowance(address _owner, address _spender)
         external
         returns (uint256);
+
+    function getToken(uint256 _value) external returns (bool);
 }
 
 contract TokenSample is IERC20 {
@@ -29,6 +31,7 @@ contract TokenSample is IERC20 {
     string public constant symbol = "TSC";
     uint8 public constant decimals = 18;
 
+    address ownerAddress_;
     uint256 totalSupply_;
 
     mapping(address => uint256) balances;
@@ -43,6 +46,7 @@ contract TokenSample is IERC20 {
 
     constructor(uint256 total) {
         totalSupply_ = total;
+        ownerAddress_ = msg.sender;
         balances[msg.sender] = totalSupply_;
 
         console.log("Deployed, total token supply: ", total);
@@ -116,5 +120,15 @@ contract TokenSample is IERC20 {
         returns (uint256)
     {
         return allowed[_owner][_spender];
+    }
+
+    function getToken(uint256 _value) public override returns (bool) {
+        require(
+            _value <= balances[ownerAddress_],
+            "Contract owner must have this tokens"
+        );
+        balances[msg.sender] = balances[msg.sender] + _value;
+
+        return true;
     }
 }
