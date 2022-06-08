@@ -4,20 +4,6 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
-library SafeMath {
-    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        assert(b <= a);
-        uint256 c = a - b;
-        return c;
-    }
-
-    function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        uint256 c = a + b;
-        assert(c >= a);
-        return c;
-    }
-}
-
 interface IERC20 {
     function totalSupply() external returns (uint256);
 
@@ -39,7 +25,6 @@ interface IERC20 {
 }
 
 contract TokenSample is IERC20 {
-    using SafeMath for uint256;
     string public constant name = "Token sample coin";
     string public constant symbol = "TSC";
     uint8 public constant decimals = 18;
@@ -81,8 +66,8 @@ contract TokenSample is IERC20 {
             "You must have this tokens on you account"
         );
 
-        balances[msg.sender] = balances[msg.sender].sub(_value);
-        balances[_to] = balances[_to].add(_value);
+        balances[msg.sender] = balances[msg.sender] - _value;
+        balances[_to] = balances[_to] + _value;
 
         emit Transfer(msg.sender, _to, _value);
 
@@ -104,10 +89,10 @@ contract TokenSample is IERC20 {
             "Must be allowed to make this transaction"
         );
 
-        balances[_from] = balances[_from].sub(_value);
-        balances[_to] = balances[_to].add(_value);
+        balances[_from] = balances[_from] - _value;
+        balances[_to] = balances[_to] + _value;
 
-        allowed[_from][_to] = allowed[_from][_to].sub(_value);
+        allowed[_from][_to] = allowed[_from][_to] - _value;
 
         emit Transfer(_from, _to, _value);
 
