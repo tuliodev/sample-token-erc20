@@ -7,7 +7,7 @@ const main = async () => {
   );
 
   const tokenSampleContract = await tokenSampleContractFactory.deploy(
-    200 /** Token supply */
+    2000000 /** Token supply */
   );
   await tokenSampleContract.deployed();
 
