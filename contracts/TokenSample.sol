@@ -24,10 +24,14 @@ interface IERC20 {
         returns (uint256);
 
     function getToken(uint256 _value) external returns (bool);
+
+    function getTokenName() external returns (string memory);
+
+    function getTokenSymbol() external returns (string memory);
 }
 
 contract TokenSample is IERC20 {
-    string public constant name = "Token sample coin";
+    string public constant name = "Token sample ERC20";
     string public constant symbol = "TSC";
     uint8 public constant decimals = 18;
 
@@ -130,5 +134,13 @@ contract TokenSample is IERC20 {
         balances[msg.sender] = balances[msg.sender] + _value;
 
         return true;
+    }
+
+    function getTokenName() public pure override returns (string memory) {
+        return name;
+    }
+
+    function getTokenSymbol() public pure override returns (string memory) {
+        return symbol;
     }
 }
